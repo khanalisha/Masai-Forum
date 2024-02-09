@@ -15,7 +15,7 @@ export const Addpost = ({ closeModal }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(addPost(formData, token));
+    dispatch(addPost(formData,token));
     closeModal();
   }
   return (

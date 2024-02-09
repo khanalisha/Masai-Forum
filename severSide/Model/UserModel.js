@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema(
 
     avatar: {
       type: String,
-      required: false, // Assuming avatar is optional
+     
     },
   },
   { timestamps: true }

@@ -28,7 +28,7 @@ export const Login = () => {
     dispatch({ type: POST_LOGIN_LOADING });
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/login`,
+        `${process.env.REACT_APP_API_URL}/api/login`,
         userObj,
         {
           headers: {

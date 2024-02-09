@@ -20,13 +20,15 @@ userRouter.post("/api/register", async (req, res) => {
         const user = new userModel({
           username,
           email,
-          avatar,
+          // avatar,
           password: hash,
         });
 
         await user.save();
 
-        res.status(201).json({ msg: "you are now registerd!", user });
+        res
+          .status(201)
+          .json({ msg: "you are now registerd!", user, sucess: true });
       });
     }
   } catch (error) {

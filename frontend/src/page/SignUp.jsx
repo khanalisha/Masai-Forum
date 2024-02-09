@@ -5,43 +5,56 @@ import { useNavigate } from "react-router-dom";
 import { createUser } from "../redux/authuser/action";
 
 export const SignUp = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState(null);
+  const userformData = {
+    username: "",
+    email: "",
+    password: "",
+  };
+  const [Registereduser, setRegisteredUser] = useState(userformData);
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const uploadFile = async (type) => {
-    const Formdata = new FormData();
-    Formdata.append("file", avatar);
-    Formdata.append("upload_preset", "preset_image");
-    try {
-      let cloudanaryName = "dqnowc28f";
-      let ResourceType = "image";
-      let api = `https://api.cloudinary.com/v1_1/${cloudanaryName}/${ResourceType}/upload`;
-
-      const res = await axios.post(api, Formdata);
-      console.log(res);
-      console.log(res.data);
-      const { secure_url } = res.data;
-      console.log(res.data.secure_url, "cc");
-      return secure_url;
-    } catch (error) {
-      console.log(error);
-    }
+  const handleChange = (e) => {
+    const { name, type, value } = e.target;
+    console.log(name, type, value);
+    setRegisteredUser((user) => ({ ...user, [name]: value }));
   };
-  const handleSubmit = async (e) => {
+
+  // const uploadFile = async (type) => {
+  //   const Formdata = new FormData();
+  //   Formdata.append("file", avatar);
+  //   Formdata.append("upload_preset", "preset_image");
+  //   Formdata.append("username", username);
+  //  Formdata.append("email", email);
+  //   Formdata.append("password", password);
+
+  //   try {
+  //     let cloudanaryName = "dqnowc28f";
+  //     let ResourceType = "image";
+  //     let api = `https://api.cloudinary.com/v1_1/${cloudanaryName}/${ResourceType}/upload`;
+
+  //     const res = await axios.post(api, Formdata);
+  //     console.log(res);
+  //     console.log(res.data);
+  //     const { secure_url } = res.data;
+  //     console.log(res.data.secure_url, "cc");
+  //     return secure_url;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      // setLoading(true);
       //upload the image file
-      const UserimageUrl = await uploadFile("image");
-      console.log(UserimageUrl, "aa");
-      let obj = {};
+      // const UserimageUrl = await uploadFile("image");
+      // console.log(UserimageUrl, "aa");
 
-      dispatch(createUser(username, email, password, UserimageUrl, navigate));
+      dispatch(createUser(Registereduser,navigate));
+      
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -57,7 +70,7 @@ export const SignUp = () => {
               Create and account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              <div>
+              {/* <div>
                 <label
                   htmlFor="avatar"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -72,7 +85,7 @@ export const SignUp = () => {
                   onChange={(e) => setAvatar((prev) => e.target.files[0])}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary_green focus:border-primary_green block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
-              </div>
+              </div> */}
               <div>
                 <label
                   htmlFor="username"
@@ -82,9 +95,10 @@ export const SignUp = () => {
                 </label>
                 <input
                   type="text"
+                  value={Registereduser.username}
                   name="username"
                   id="username"
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary_green focus:border-primary_green block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Iamjohndoe"
                 />
@@ -98,8 +112,9 @@ export const SignUp = () => {
                 </label>
                 <input
                   type="email"
+                  value={Registereduser.email}
                   name="email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleChange}
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary_green focus:border-primary_green block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
@@ -115,8 +130,9 @@ export const SignUp = () => {
                 <input
                   type="password"
                   name="password"
+                  value={Registereduser.password}
                   id="password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handleChange}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary_green focus:border-primary_green block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />

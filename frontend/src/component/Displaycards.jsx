@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Cards } from "./Cards";
+
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "../redux/postRedux/action";
 import { Model } from "./Model";
-import { Edit } from "./Edit";
+
 import { Addpost } from "./Addpost";
 import { Link } from "react-router-dom";
 
@@ -39,8 +39,6 @@ export const Displaycards = () => {
       </div>
 
       {post.map((el) => (
-    
-
         <div key={el._Id}>
           <div class="flex justify-center mb-4">
             <a className="flex flex-col items-center cards bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-7xl  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
