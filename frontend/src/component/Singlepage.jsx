@@ -35,7 +35,7 @@ export const Singlepage = () => {
     try {
       let res = await axios.get(
         // `${process.env.REACT_APP_API_URL}/api/posts/${id}`,
-        `http://localhost:8080/api/posts/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/posts/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
