@@ -5,7 +5,7 @@ const postRoute = express.Router();
 
 postRoute.use(auth);
 postRoute.post("/api/posts", async (req, res) => {
-  const { user_Id, title, category, media } = req.body;
+  const { user_Id, title, category, media, content } = req.body;
 
   try {
     const post = new postModel({
@@ -13,6 +13,7 @@ postRoute.post("/api/posts", async (req, res) => {
       title,
       category,
       media,
+      content,
     });
     await post.save();
     res.status(201).json({ msg: "Post is added", post });
@@ -37,6 +38,22 @@ postRoute.get("/api/posts", async (req, res) => {
     res.status(200).json({ msg: "This are all post", post });
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+
+//SinglePost
+
+postRoute.get("/api/posts/:post_id", async (req, res) => {
+  const id = req.params.post_id;
+  console.log(id);
+  try {
+    const post = await postModel.findById(id); // Assuming you have a findById method in your post model
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+    res.status(200).json({ msg: "This is the post", post });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
